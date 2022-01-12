@@ -1,5 +1,7 @@
 package ca.nait.dmit.domain;
 
+import lombok.Data;
+
 import java.time.LocalDate;
 @Data
 public class AlbertaCovid19SummaryData {

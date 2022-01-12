@@ -1,6 +1,7 @@
 package ca.nait.dmit.service;
 
 import ca.nait.dmit.domain.AlbertaCovid19SummaryData;
+import lombok.Getter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
