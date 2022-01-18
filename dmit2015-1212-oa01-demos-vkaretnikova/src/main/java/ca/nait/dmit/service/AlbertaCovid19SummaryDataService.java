@@ -16,16 +16,22 @@ public class AlbertaCovid19SummaryDataService {
     private List<AlbertaCovid19SummaryData> dataList = new ArrayList<>();
 
     public AlbertaCovid19SummaryDataService() throws IOException {
-        try (var reader = new BufferedReader(new InputStreamReader(
-                getClass().getResourceAsStream("/data/covid-19-alberta-statistics-summary-data.csv")))){
+        dataList = loadCsvData();
+    }
 
-        final var delimiter =  ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
-        String line;
-        // Skip the first line
+    private List<AlbertaCovid19SummaryData> loadCsvData() throws IOException {
+        List<AlbertaCovid19SummaryData> dataList = new ArrayList<>();
+
+        try (var reader = new BufferedReader(new InputStreamReader(
+                getClass().getResourceAsStream("/data/covid-19-alberta-statistics-summary-data.csv")))) {
+
+            final var delimiter = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
+            String line;
+            // Skip the first line
             reader.readLine();
             var dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        // Read one line at time from the input stream
-            while ((line = reader.readLine()) != null){
+            // Read one line at time from the input stream
+            while ((line = reader.readLine()) != null) {
                 String[] values = line.split(delimiter, -1);
 
                 // Column order of fields
@@ -45,7 +51,7 @@ public class AlbertaCovid19SummaryDataService {
 
 
                 AlbertaCovid19SummaryData lineData = new AlbertaCovid19SummaryData();
-                lineData.setId(Integer.parseInt(values[0].replaceAll("\"","")));
+                lineData.setId(Integer.parseInt(values[0].replaceAll("\"", "")));
                 lineData.setDateReported(LocalDate.parse(values[1], dateFormatter));
                 lineData.setNumberOfLabTests(Integer.parseInt(values[2]));
                 lineData.setCumulativeNumberOfLabTests(Integer.parseInt(values[3]));
@@ -60,8 +66,8 @@ public class AlbertaCovid19SummaryDataService {
                 lineData.setPercentPositivity(Double.parseDouble(values[12]));
                 // Add lineData to dataList
                 dataList.add(lineData);
-
             }
         }
+        return dataList;
     }
 }
