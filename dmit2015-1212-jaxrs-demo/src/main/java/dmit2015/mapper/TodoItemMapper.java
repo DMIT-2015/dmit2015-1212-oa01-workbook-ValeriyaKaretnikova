@@ -14,12 +14,12 @@ public interface TodoItemMapper {
     TodoItemMapper INSTANCE = Mappers.getMapper(TodoItemMapper.class);
 
     @Mappings({
-            @Mapping(target = "todoitemId", source = "entity.id")
+            @Mapping(target = "todoItemId", source = "entity.id")
     })
     TodoItemDto toDto(TodoItem entity);
 
     @Mappings({
-            @Mapping(target = "id", source = "todoitemId")
+            @Mapping(target = "id", source = "todoItemId")
     })
     TodoItem toEntity(TodoItemDto dto);
 

@@ -104,7 +104,7 @@ class TodoItemResource2RestAssuredIT {
     @Test
     void shouldUpdate() throws JsonProcessingException {
         Response response = given()
-    //            .accept(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .when()
                 .get(testDataResourceLocation)
                 .then()

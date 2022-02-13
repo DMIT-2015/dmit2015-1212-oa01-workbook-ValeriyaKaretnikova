@@ -1,4 +1,4 @@
-package dmit2015.config;
+package common.config;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
