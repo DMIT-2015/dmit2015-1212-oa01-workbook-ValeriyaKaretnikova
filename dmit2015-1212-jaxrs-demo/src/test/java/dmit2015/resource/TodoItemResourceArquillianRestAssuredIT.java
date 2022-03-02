@@ -23,7 +23,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import javax.json.Json;
+//import javax.json.Json;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,0 +1,24 @@
+<job id="myJob" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
+    <step id="downloadFileStep" >
+        <batchlet ref="downloadCsvFileBatchlet">
+            <properties>
+                <property name="csv_file_uri" value="https://data.edmonton.ca/api/views/akzz-54k3/rows.csv?accessType=DOWNLOAD"/>
+                <property name="file_download_path" value="/home/user2015/Downloads"/>
+            </properties>
+        </batchlet>
+    </step>
+
+    <step id = "importDataStep">
+        <chunk>
+            <reader ref="enforcementZoneCenterItemReader">
+                <properties>
+                    <property name="input_file" value="/home/user2015/Downloads/Scheduled_Photo_Enforcement_Zone_Centre_Points"/>
+                </properties>
+
+            </reader>
+            <processor ref="enforcementZoneCenterItemProcessor"></processor>
+            <writer ref="enforcementZoneCenterItemWriter"></writer>
+        </chunk>
+
+    </step>
+</job>
