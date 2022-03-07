@@ -48,8 +48,8 @@ public class BatchJobResource {
 			URI location = URI.create(uriInfo.getBaseUri().toString() + "batch-jobs/" + jobId );
 
 			return Response
-				.created(location)
-				.build();
+					.created(location)
+					.build();
 		} catch (JobStartException ex) {
 			ex.printStackTrace();
 			return Response.status(Response.Status.NOT_FOUND).entity(ex.getMessage()).build();
