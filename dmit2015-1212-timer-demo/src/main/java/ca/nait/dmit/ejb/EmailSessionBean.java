@@ -15,25 +15,17 @@ import java.io.File;
  * To send email with the Wildfly mail subsystem you must first configure the default mail session with your own email account as follows:
  * Step 1: Start the JBoss WildFly server
  * Step 2: Open a Terminal window and type in the following commands to configure the mail subsystem with your own email account info.
-
  $JBOSS_HOME/bin/jboss-cli.sh
  connect
  batch
  /subsystem=mail/mail-session=default/server=smtp/:write-attribute(name=username,value=yourGmailUsername@gmail.com)
-
  /subsystem=mail/mail-session=default/server=smtp/:write-attribute(name=password,value=yourGmailAppPassword)
-
  /subsystem=mail/mail-session=default/server=smtp/:write-attribute(name=tls,value=true)
-
  /subsystem=mail/mail-session=default/:write-attribute(name=from,value=yourGmailUsername@gmail.com)
-
  /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp/:write-attribute(name=host,value=smtp.gmail.com)
-
  /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp/:write-attribute(name=port,value=587)
-
  run-batch
  reload
-
  *
  * To use this session session from another managed class, simply use the @Inject annotation to inject an instance of this bean:
  *

@@ -23,10 +23,9 @@ import jakarta.ws.rs.core.UriInfo;
  *                                                                                "mailText";"Guess JavaMail is working!"}
  *
  * curl command to send mail to username@nait.ca (change username@nait.ca an actual email address) for webapp running on HTTP and @ApplicationPath("webapi") in JAXRSConfiguration.java
-
-curl -i -X POST http://localhost:8080/contextPath/webapi/mail \
-        -d '{"mailToAddresses":"usename@nait.ca", "mailSubject": "DMIT2015 WildFly mail subsystem", "mailText": "This email was sent using the Wildfly mail subsystem and a statless session bean."},' \
-        -H 'Content-Type:application/json'
+ curl -i -X POST http://localhost:8080/contextPath/webapi/mail \
+ -d '{"mailToAddresses":"usename@nait.ca", "mailSubject": "DMIT2015 WildFly mail subsystem", "mailText": "This email was sent using the Wildfly mail subsystem and a statless session bean."},' \
+ -H 'Content-Type:application/json'
  *
  *
  */
@@ -48,16 +47,16 @@ public class MailResource {
                                 mailJsonObject.getString("mailText")
                         );
                         URI location = uriInfo.getAbsolutePathBuilder()
-                                        .build();
+                                .build();
                         return Response
-                                        .created(location)
-                                        .build();
+                                .created(location)
+                                .build();
                 } catch (Exception ex) {
                         // Return a HTTP status of "500 Internal Server Error" containing the exception message
                         return Response
-                                        .serverError()
-                                        .entity(ex.getMessage())
-                                        .build();
+                                .serverError()
+                                .entity(ex.getMessage())
+                                .build();
                 }
         }
 }

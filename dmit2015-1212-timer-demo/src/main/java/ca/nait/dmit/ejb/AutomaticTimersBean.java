@@ -41,7 +41,7 @@ public class AutomaticTimersBean {        // Also known as Calendar-Based Timers
                                 timer.getSchedule().getYear()
                         );
                         try {
-                                // mail.sendTextEmail(mailToAddress, mailSubject, mailText);
+                                mail.sendTextEmail(mailToAddress, mailSubject, mailText);
                                 _logger.info("Successfully sent email to " + mailToAddress);
                         } catch (Exception e) {
                                 e.printStackTrace();
@@ -51,7 +51,7 @@ public class AutomaticTimersBean {        // Also known as Calendar-Based Timers
         }
 
         @Schedules({
-                 @Schedule(second = "0", minute ="51", hour = "12", dayOfWeek = "Mon,Wed", month = "Jan-Apr", year = "2022", info ="DMIT2015-OA01 Meeting", persistent = false),
+                 @Schedule(second = "0", minute ="05", hour = "11", dayOfWeek = "Mon,Wed", month = "Jan-Apr", year = "2022", info ="DMIT2015-OA01 Meeting", persistent = false),
                  @Schedule(second = "0", minute ="50", hour = "7", dayOfWeek = "Tue", month = "Jan-Apr", year = "2022", info ="DMIT2015-OA01 Meeting", persistent = false)
         })
         public void dmit2015SectionOA01ClassNotifiation(Timer timer) {
