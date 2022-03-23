@@ -91,18 +91,45 @@ public class DemoTimersBean {        // Also known as Calendar-Based Timers
     @Timeout
     public void checkBatchJobStatus(Timer timer) {
         // Extract the jobId from the timer
-        long jobId = (long) timer.getInfo();
-        JobOperator jobOperator = BatchRuntime.getJobOperator();
-        JobExecution jobExecution = jobOperator.getJobExecution(jobId);
-        if (jobExecution.getBatchStatus() == BatchStatus.COMPLETED) {
-            timer.cancel();
-            // send email to notified batch job has completed
-            List<EnforcementZoneCentre> entities = enforcementZoneCentreRepository.list();
+        try {
+            long jobId = (long) timer.getInfo();
+            JobOperator jobOperator = BatchRuntime.getJobOperator();
+            JobExecution jobExecution = jobOperator.getJobExecution(jobId);
+            if (jobExecution.getBatchStatus() == BatchStatus.COMPLETED) {
+                timer.cancel();
+                _logger.info("Batch job " + jobId + " Completed");
+                // send email to notified batch job has completed
+                List<EnforcementZoneCentre> entities = enforcementZoneCentreRepository.list();
+                StringBuilder stringBuilder = new StringBuilder();
+                for (var currentItem: entities)
+                {
+                    String lineText = String.format("%s %s %s \n", currentItem.getSiteId(), currentItem.getLocationDescription(), currentItem.getSpeedLimit());
+                    stringBuilder.append(lineText);
+                }
+                String mailBody = stringBuilder.toString();
 
-        } else if (jobExecution.getBatchStatus() == BatchStatus.FAILED) {
-            // send email to notified batch job has failed
-            timer.cancel();
+                mail.sendTextEmail(mailToAddress, "Batch Job Completed", mailBody);
+
+
+            } else if (jobExecution.getBatchStatus() == BatchStatus.FAILED) {
+                // send email to notified batch job has failed
+                timer.cancel();
+                _logger.info("Batch job " + jobId + " Failed");
+            }
+
+        } catch (Exception ex)
+        {
+            ex.printStackTrace();
+            try
+            {
+                mail.sendTextEmail(mailToAddress, "Batch Job Exception", ex.getMessage());
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
         }
+
     }
 
 }
